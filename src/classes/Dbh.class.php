@@ -1,6 +1,6 @@
 <?php
 
-require 'vendor/autoload.php';
+require '../vendor/autoload.php';
 
 /** 
  * This class represents a database handle
@@ -19,7 +19,9 @@ class Dbh {
         $pass = getenv('DB_PASSWORD');
 
         try {
-            $this->dbConnection = new \PDO("mysql:host=$host;port=$port;charset=utf8mb4;dbname=$db", $user, $pass);
+            $pdo = new \PDO("mysql:host=$host;port=$port;charset=utf8mb4;dbname=$db", $user, $pass);
+            $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            $this->dbConnection = $pdo;
         } catch (\PDOException $e) {
             exit($e->getMessage());
         }

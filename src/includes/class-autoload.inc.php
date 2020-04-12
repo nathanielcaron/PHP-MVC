@@ -5,9 +5,9 @@ spl_autoload_register('autoLoader');
 function autoLoader ($className) {
 
     if (strpos($className, 'Dotenv') !== false) {
-        $path = 'vendor/vlucas/phpdotenv/';
+        $path = '../vendor/vlucas/phpdotenv/';
     } else {
-        $path = 'src/classes/';
+        $path = '../src/classes/';
     }
 
     $extension = '.class.php';
@@ -15,6 +15,7 @@ function autoLoader ($className) {
 
     if (!file_exists($fileName)) {
         header('HTTP/1.1 404 Not Found');
+        exit();
     }
 
     include_once $fileName;
