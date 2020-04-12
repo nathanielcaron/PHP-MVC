@@ -5,7 +5,7 @@ This project uses composer for package management:
 https://getcomposer.org/
 
 Before running this project, you must download all the dependencies:
-inside the root project directory: "composer install:
+inside the root project directory: "composer install"
 
 Endpoints:
 
