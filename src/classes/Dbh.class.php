@@ -1,27 +1,33 @@
 <?php
 
-require_once 'vendor/autoload.php';
+require 'vendor/autoload.php';
 
 /** 
  * This class represents a database handle
  */
 class Dbh {
 
-    private $host = "localhost";
-    private $port = "3306";
-    private $db   = "php-mvc";
-    private $user = "root";
-    private $pass = "";
+    private $dbConnection = null;
 
-    protected function connect() {
-        \Dotenv\Dotenv::create(__DIR__)->load();
-        
-        $dsn = 'mysql:host=' . $this->host . ';port=' . $this->port . ';dbname=' . $this->db;
-        $pdo = new PDO($dsn, $this->user, $this->pass);
+    public function __construct() {
+        \Dotenv\Dotenv::createImmutable(__DIR__ . "/../../")->load();
 
-        $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $host = getenv('DB_HOST');
+        $port = getenv('DB_PORT');
+        $db   = getenv('DB_DATABASE');
+        $user = getenv('DB_USERNAME');
+        $pass = getenv('DB_PASSWORD');
 
-        return $pdo;
+        try {
+            $this->dbConnection = new \PDO("mysql:host=$host;port=$port;charset=utf8mb4;dbname=$db", $user, $pass);
+        } catch (\PDOException $e) {
+            exit($e->getMessage());
+        }
     }
+
+    public function getConnection() {
+        return $this->dbConnection;
+    }
+
 }
 ?>
